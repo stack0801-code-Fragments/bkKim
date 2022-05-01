@@ -30,8 +30,8 @@ void BFS(int startX, int startY,int m,int n,vector<vector<int>>picture) {
 				continue;
 			if (picture[calcX][calcY] != picture[startX][startY] || picture[calcX][calcY] == 0)
 				continue;
-            if(visited[calcX][calcY])
-                continue;
+            		if(visited[calcX][calcY])
+                		continue;
 			visited[calcX][calcY] = true;
 			q.push({ calcX,calcY });
 			cnt++;
