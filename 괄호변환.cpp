@@ -1,62 +1,51 @@
-#include<iostream>
 #include<algorithm>
 #include<vector>
-#include<stack>
 
 using namespace std;
 
-bool isValid(string str) {
-    int value = 0;
-    for (int i = 0; i < str.length(); i++) {
-        if (value < 0)
-            return false;
+pair<int, int> isValid(string p) {
+	int value = 0;
+	int idx = 0;
 
-        if (str[i] == '(')
-            value++;
-        else
-            value--;
-    }
-    return true;
+	for (int i = 0; i < p.length(); i++) {
+		if (i != 0 && value == 0) 
+			break;
+		if (p[i] == '(') value++;
+		else value--;
+		idx++;
+	}
+
+	if (p[0] == '(' && idx == p.length()) //즉 올바른 문자열
+		return { idx,2 };
+	else if (p[0] == '(') // 올바른인데 전부가 아닌경우
+		return { idx,1 };
+	return { idx,0 }; // 올바른 문자 아닌경우
 }
 
 
-string solution(string str) {
+string solution(string p) {
+	if (p == "")
+		return "";
 
-    if (str == "")
-        return "";
+	pair<int,int> result = isValid(p);
 
+	if (result.second == 2) //전부 올바른 문자열일때
+		return p;
+	else if (result.second == 1) //앞부분이 올바른 문자열일 경우
+		return solution(p.substr(0, result.first)) + solution(p.substr(result.first));
+	
+	string tempStr = "(";
+	tempStr += solution(p.substr(result.first));
+	tempStr += ")";
+	for (int i = 1; i < result.first - 1; i++) {
+		if (p[i] == '(') tempStr += ')';
+		else tempStr += '(';
+	}
 
-    int cnt = 0;
-    stack<char>s;
-    
-    for (int i = 0; i < str.length(); i++) {
+	return tempStr;
+}
 
-        if (s.empty() && i != 0) {
-            cnt = i;
-            break;
-        }            
-        else if (s.empty() || s.top() == str[i])
-            s.push(str[i]);
-        else if (i == str.length() - 1 && s.top() != str[i] && s.size() == 1) {
-            cnt = str.length();
-        }
-        else if (s.top() != str[i])
-            s.pop();
-    }
-    if (str.length() == cnt && isValid(str.substr(0, cnt)))
-        return str;
-    else if (isValid(str.substr(0, cnt))) 
-        return solution(str.substr(0, cnt)) + solution(str.substr(cnt));
-    
-
-    string tempStr = "(";
-    tempStr += solution(str.substr(cnt));
-    tempStr += ")";
-
-    for (int i = 1; i < cnt - 1; i++) {
-        if (str[i] == '(')
-            tempStr += ')';
-        else tempStr += '(';
-    }
-    return tempStr;        
+int main()
+{
+	cout << solution("()))((()");
 }
