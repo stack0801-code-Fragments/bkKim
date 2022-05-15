@@ -10,8 +10,7 @@ pair<int, int> isValid(string p) {
 	for (int i = 0; i < p.length(); i++) {
 		if (i != 0 && value == 0) 
 			break;
-		if (p[i] == '(') value++;
-		else value--;
+		p[i] == '(' ? value++ : value--;
 		idx++;
 	}
 
@@ -21,7 +20,6 @@ pair<int, int> isValid(string p) {
 		return { idx,1 };
 	return { idx,0 }; // 올바른 문자 아닌경우
 }
-
 
 string solution(string p) {
 	if (p == "")
@@ -33,14 +31,10 @@ string solution(string p) {
 		return p;
 	else if (result.second == 1) //앞부분이 올바른 문자열일 경우
 		return solution(p.substr(0, result.first)) + solution(p.substr(result.first));
-	
-	string tempStr = "(";
-	tempStr += solution(p.substr(result.first));
-	tempStr += ")";
-	for (int i = 1; i < result.first - 1; i++) {
-		if (p[i] == '(') tempStr += ')';
-		else tempStr += '(';
-	}
+		 
+	string tempStr = "(" + solution(p.substr(result.first)) + ")";
+	for (int i = 1; i < result.first - 1; i++) 
+		p[i] == '(' ? tempStr += ')' : tempStr += '(';
 
 	return tempStr;
 }
