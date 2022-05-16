@@ -26,9 +26,8 @@ vector<string> calc(string str) { // 문자열을 잘라서 원소를 리턴하�
 	return v;
 }
 
-bool isNotNull(string str) {
-	if (str != "")
-		return true;
+bool isNotNull(string str) { // 빈 문자열 아닌것만 true
+	if (str != "") return true;
 	return false;
 }
 
@@ -38,7 +37,7 @@ int solution(string str1, string str2) {
 	vector<string>v3(v1.size() + v2.size());
 	vector<string>v4(v1.size() + v2.size());
     
-    if (v1.size() == 0 && v2.size() == 0) return 65536;
+    	if (v1.size() == 0 && v2.size() == 0) return 65536;
         
 	sort(v1.begin(), v1.end());
 	sort(v2.begin(), v2.end());
