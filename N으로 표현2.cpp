@@ -25,24 +25,20 @@ void BFS(int n, int target) {
         if (temp.second > 8)
             return;
 
-        if (temp.first >= 0 && temp.first <= 288001) {
+        if (temp.first >= 0 && temp.first <= 288001) 
             arr[temp.first] = min(arr[temp.first], temp.second);
-        }
 
         q.push({ temp.first + n,temp.second + 1 });
         q.push({ temp.first - n,temp.second + 1 });
         q.push({ temp.first / n,temp.second + 1 });
         q.push({ temp.first * n,temp.second + 1 });
     }
-
 }
 
 int solution(int n, int target) {
     BFS(n, target);
     int result = 0;
         
-    int tencnt = 0;
-    bool tenswit = false;
     for (int i = 1; i <= target; i++) {
         for (int j = 0; j <= i / 2; j++) {
             arr[i] = min(arr[i], arr[i - j] + arr[j]); // 덧셈          
