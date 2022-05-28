@@ -52,3 +52,4 @@ int solution(int n, int target) {
     result = arr[target] > 8 ? -1 : arr[target];
     return result;
 }
+// 나중에 찬현이 방법으로 
